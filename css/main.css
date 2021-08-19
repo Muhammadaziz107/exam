@@ -1,0 +1,23 @@
+body {
+  background-color: #70aac6;
+  width: 100%;
+  height: 100%;
+}
+
+.users {
+  width: 400px;
+  background-color: #d95ba1;
+  border-radius: 5px;
+}
+.users__list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.users__item {
+  background-color: #d5e5c8;
+  text-align: center;
+  padding: 15px 20px;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
