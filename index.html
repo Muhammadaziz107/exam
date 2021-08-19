@@ -10,17 +10,46 @@
   </head>
   <body>
     <section class="section">
-      <div class="users w-50"></div>
+      <div class="users w-50">
+        <ul class="users__list"></ul>
+      </div>
       <!-- ======posts====== -->
 
-      <div class="posts"></div>
+      <div class="posts">
+        <ul class="posts__list"></ul>
+      </div>
       <!-- ======comments====== -->
-      <div class="comments"></div>
+      <div class="comments">
+        <ul class="comments__list"></ul>
+      </div>
     </section>
 
     <!-- =====users-template========== -->
 
-    <template class="users-template"></template>
+    <template class="users-template">
+      <li class="users__item">
+        <p class="users__id">1</p>
+        <p class="users__name">Leanne Graham</p>
+        <p class="users__username">Bret</p>
+        <p class="users__email">Sincere@april.biz</p>
+        <ul class="users__address">
+          <li class="users__address__street">Kulas Light</li>
+          <li class="users__address__suite">Apt. 556</li>
+          <li class="users__address__city">Gwenborough</li>
+          <li class="users__address__zipcode">92998-3874</li>
+          <a class="users__address__geo">#</a>
+        </ul>
+        <p class="users__phone">1-770-736-8031 x56442</p>
+        <a href="#" class="users__website">hildegard.org</a>
+        <ul class="users__company">
+          <li class="users__company__name">Romaguera-Crona</li>
+          <li class="users__company__catchPhrase">
+            Multi-layered client-server neural-net
+          </li>
+          <li class="users__company__bs">harness real-time e-markets</li>
+        </ul>
+      </li>
+    </template>
 
     <!-- =====posts-template========== -->
 
