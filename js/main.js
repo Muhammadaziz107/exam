@@ -38,12 +38,6 @@ function renderUsers(arr, element) {
   });
   element.appendChild(usersFragment);
 }
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-// ===========================
 
 // ================async users function================
 
@@ -67,14 +61,6 @@ async function fetchPosts(endPoint = "posts", id) {
   renderPosts(data, elPostsList);
 }
 
-// fetchPosts();
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-
 // ==================render posts==============
 function renderPosts(arr, element) {
   const postsFragment = document.createDocumentFragment();
@@ -94,39 +80,13 @@ function renderPosts(arr, element) {
   element.appendChild(postsFragment);
 }
 
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-
-// }=============================filter-posts=============
-function filterPosts(userId, data) {
-  const posts = data.filter(post => {
-    return post.user_id == userId;
-  });
-  renderPosts(posts, elPostsList);
-}
-
-// filterPosts()
-
-// filterPosts(userId, elPostsList);
-
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-// ===========================
-
 // ===============add eveny user list====================
 elUsersList.addEventListener("click", evt => {
   const clickedUsers = evt.target.closest("li").dataset.user_id;
 
   console.log(clickedUsers);
   elCommentsList.innerHTML = null;
-  // filterPosts(clickedUsers);
+
   fetchPosts("posts", elPostsList);
 });
 
@@ -151,7 +111,7 @@ function renderComments(arr, element) {
   });
   element.appendChild(commentFragment);
 }
-
+// fetchComments();
 async function fetchComments(id) {
   const response = await fetch(
     "https://jsonplaceholder.typicode.com/comments?postId=" + id
@@ -161,9 +121,6 @@ async function fetchComments(id) {
 
   renderComments(data, elCommentsList);
 }
-
-// fetchComments();
-// ============
 
 elPostsList.addEventListener("click", evt => {
   const clickedPosts = evt.target.closest("li").dataset.post_id;
