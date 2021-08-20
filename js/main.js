@@ -28,25 +28,6 @@ function renderUsers(arr, element) {
     usersTemplate.querySelector(".users__address").textContent =
       "address: " + row.address;
 
-    // row.address.forEach(evt => {
-    //   usersTemplate.querySelector(".users__address__street").textContent =
-    //     "address: " + evt.street;
-
-    //   usersTemplate.querySelector(".users__address__suite").textContent =
-    //     "suite: " + evt.suite;
-
-    //   usersTemplate.querySelector(".users__address__city").textContent =
-    //     "city: " + evt.city;
-
-    //   usersTemplate.querySelector(".users__address__zipcode").textContent =
-    //     "zipcode: " + evt.zipcode;
-
-    //   usersTemplate.querySelector(".users__address__geo").textContent = "geo: " + evt.geo;
-
-    //   usersFragment.appendChild(usersTemplate);
-    // });
-
-    // =========================
     usersTemplate.querySelector(".users__phone").textContent = "phone: " + row.phone;
 
     usersTemplate.querySelector(".users__website").textContent = row.website;
@@ -54,22 +35,52 @@ function renderUsers(arr, element) {
     usersTemplate.querySelector(".users__company").textContent =
       "company: " + row.company;
 
+    elUsersList.dataset.user_id = row.id;
+
     usersFragment.appendChild(usersTemplate);
   });
   element.appendChild(usersFragment);
 }
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+
+// ================async users function================
+
+async function fetchUsers(arr, id) {
+  try {
+    elUsersList.innerHTML = null;
+
+    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+
+    const data = await response.json();
+
+    renderUsers(data, elUsersList);
+  } catch (err) {
+    console.log("error" + err);
+  }
+}
+fetchUsers();
+
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+// ===========================
 
 // ==================render posts==============
-
 function renderPosts(arr, element) {
-  element.innerHTML = null;
-
   const postsFragment = document.createDocumentFragment();
 
   arr.forEach(row => {
+    element.innerHTML = null;
     const postsTemplate = elPostsTemplate.cloneNode(true);
 
-    postsTemplate.querySelector(".posts__item").dataset.post_id = row.userId;
+    postsTemplate.querySelector(".posts__item").dataset.post_id = row.id;
     postsTemplate.querySelector(".posts__item__usersId").textContent = row.userId;
     postsTemplate.querySelector(".posts__item__id").textContent = row.id;
     postsTemplate.querySelector(".posts__item__title").textContent = row.title;
@@ -80,19 +91,37 @@ function renderPosts(arr, element) {
   element.appendChild(postsFragment);
 }
 
-async function fetchUsers() {
-  try {
-    elUsersList.innerHTML = null;
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+// ===========================
 
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
-
-    const data = await response.json();
-
-    renderUsers(data, elUsersList);
-  } catch (err) {
-    console.log("error", err);
-  }
+// }=============================filter-posts=============
+function filteredPosts(userId, data) {
+  const usersPosts = data.filter(posts => {
+    return posts.user_id == userId;
+  });
+  console.log(usersPosts);
+  renderPosts(usersPosts, elPostsList);
 }
+
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+// ===========================
+
+// ===============add eveny user list====================
+
+elUsersList.addEventListener("click", evt => {
+  const clickedUsers = evt.target.closest("li").dataset.user_id;
+  elCommentsList.innerHTML = null;
+  fetchUsers(elPostsList, clickedUsers);
+  console.log(clickedUsers);
+});
 
 async function fetchPosts() {
   try {
@@ -101,25 +130,18 @@ async function fetchPosts() {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
 
     const data = await response.json();
-
-    renderPosts(data, elPostsList);
+    // renderPosts(data, elPostsList);
   } catch (err) {
     console.log(err + "error");
   }
 }
-fetchUsers();
+
 fetchPosts();
 
-// =============listen userslist==============
+// ============
 
-elUsersList.addEventListener("click", evt => {
-  const clickedUsers = evt.target.closest("li").dataset.user_id;
+// elPostsList.addEventListener("click", evt => {
+//   const clickedPosts = evt.target.closest("li").dataset.post_id;
 
-  console.log(clickedUsers);
-});
-
-elPostsList.addEventListener("click", evt => {
-  const clickedPosts = evt.target.closest("li").dataset.post_id;
-
-  console.log(clickedPosts);
-});
+//   console.log(clickedPosts);
+// });
