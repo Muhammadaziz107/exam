@@ -8,6 +8,7 @@ const elUsersTemplate = document.querySelector(".users-template").content;
 const elPostsTemplate = document.querySelector(".posts-template").content;
 const elCommentsTemplate = document.querySelector(".comments-template").content;
 const elUsersItem = document.querySelector(".users__item");
+
 function renderUsers(arr, element) {
   element.innerHTML = null;
 
@@ -35,8 +36,6 @@ function renderUsers(arr, element) {
     usersTemplate.querySelector(".users__company").textContent =
       "company: " + row.company;
 
-    elUsersList.dataset.user_id = row.id;
-
     usersFragment.appendChild(usersTemplate);
   });
   element.appendChild(usersFragment);
@@ -50,15 +49,20 @@ function renderUsers(arr, element) {
 
 // ================async users function================
 
-async function fetchUsers(arr, id) {
+async function fetchUsers(endPoint, id) {
   try {
+    endPoint = "users";
     elUsersList.innerHTML = null;
 
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+    const response = await fetch("https://jsonplaceholder.typicode.com/" + endPoint);
 
     const data = await response.json();
 
-    renderUsers(data, elUsersList);
+    if (endPoint == "posts") {
+      filteredPosts(userID, data);
+    } else {
+      renderUsers(data, elUsersList);
+    }
   } catch (err) {
     console.log("error" + err);
   }
@@ -99,12 +103,11 @@ function renderPosts(arr, element) {
 // ===========================
 
 // }=============================filter-posts=============
-function filteredPosts(userId, data) {
-  const usersPosts = data.filter(posts => {
-    return posts.user_id == userId;
+function filterPosts(userID, data) {
+  const userPosts = data.filter(post => {
+    return post.userId == userID;
   });
-  console.log(usersPosts);
-  renderPosts(usersPosts, elPostsList);
+  renderPosts(userPosts, elPostsList);
 }
 
 // ===========================
@@ -115,33 +118,50 @@ function filteredPosts(userId, data) {
 // ===========================
 
 // ===============add eveny user list====================
-
 elUsersList.addEventListener("click", evt => {
   const clickedUsers = evt.target.closest("li").dataset.user_id;
-  elCommentsList.innerHTML = null;
-  fetchUsers(elPostsList, clickedUsers);
+
   console.log(clickedUsers);
+  elCommentsList.innerHTML = null;
+  fetchUsers("posts", clickedUsers);
 });
 
-async function fetchPosts() {
-  try {
-    elUsersList.innerHTML = null;
+// ================render comments ============
 
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+function renderComments(arr, element) {
+  element.innerHTML = null;
 
-    const data = await response.json();
-    // renderPosts(data, elPostsList);
-  } catch (err) {
-    console.log(err + "error");
-  }
+  const commentFragment = document.createDocumentFragment();
+
+  arr.forEach(row => {
+    const commentTemplate = elCommentsTemplate.cloneNode(true);
+
+    commentTemplate.querySelector(".comments__item__postId").textContent = row.postId;
+    commentTemplate.querySelector(".comments__item__id").textContent = row.id;
+    commentTemplate.querySelector(".comments__item__name").textContent = row.name;
+    commentTemplate.querySelector(".comments__item__email").textContent = row.email;
+    commentTemplate.querySelector(".comments__item__body").textContent = row.body;
+
+    commentFragment.appendChild(commentTemplate);
+  });
+  element.appendChild(commentFragment);
 }
 
-fetchPosts();
+async function fetchComments(id) {
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/comments?postId=" + id
+  );
 
+  const data = await response.json();
+
+  renderComments(data, elCommentsList);
+}
+
+// fetchComments();
 // ============
 
-// elPostsList.addEventListener("click", evt => {
-//   const clickedPosts = evt.target.closest("li").dataset.post_id;
+elPostsList.addEventListener("click", evt => {
+  const clickedPosts = evt.target.closest("li").dataset.post_id;
 
-//   console.log(clickedPosts);
-// });
+  fetchComments(clickedPosts);
+});

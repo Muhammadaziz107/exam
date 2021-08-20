@@ -33,6 +33,12 @@ body {
   background-color: #d95ba1;
   border-radius: 5px;
 }
+
+.comments {
+  width: 400px;
+  background-color: #d95ba1;
+  border-radius: 5px;
+}
 .posts__item {
   background-color: #d5e5c8;
   text-align: center;
