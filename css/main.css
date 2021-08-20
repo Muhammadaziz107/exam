@@ -20,6 +20,7 @@ body {
   background-color: #d5e5c8;
   text-align: center;
   padding: 15px 20px;
+  cursor: pointer;
   text-transform: uppercase;
   border-radius: 5px;
 }
@@ -45,6 +46,7 @@ body {
   padding: 15px 20px;
   text-transform: uppercase;
   border-radius: 5px;
+  cursor: pointer;
 }
 .comments__list {
   margin: 0;
@@ -56,5 +58,16 @@ body {
   text-align: center;
   padding: 15px 20px;
   text-transform: uppercase;
+  cursor: pointer;
   border-radius: 5px;
+}
+
+.users__item:hover {
+  box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+}
+.posts__item:hover {
+  box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+}
+.comments__item:hover {
+  box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
 }

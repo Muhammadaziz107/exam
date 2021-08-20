@@ -10,31 +10,29 @@ const elCommentsTemplate = document.querySelector(".comments-template").content;
 const elUsersItem = document.querySelector(".users__item");
 
 function renderUsers(arr, element) {
-  element.innerHTML = null;
-
   const usersFragment = document.createDocumentFragment();
 
-  arr.forEach(row => {
+  arr.forEach(users => {
     const usersTemplate = elUsersTemplate.cloneNode(true);
-    usersTemplate.querySelector(".users__item").dataset.user_id = row.id;
-    usersTemplate.querySelector(".users__id").textContent = "id: " + row.id;
+    usersTemplate.querySelector(".users__item").dataset.user_id = users.id;
+    usersTemplate.querySelector(".users__id").textContent = "id: " + users.id;
 
-    usersTemplate.querySelector(".users__name").textContent = "name: " + row.name;
+    usersTemplate.querySelector(".users__name").textContent = "name: " + users.name;
 
     usersTemplate.querySelector(".users__username").textContent =
-      "username: " + row.username;
+      "username: " + users.username;
 
-    usersTemplate.querySelector(".users__email").textContent = "email: " + row.email;
+    usersTemplate.querySelector(".users__email").textContent = "email: " + users.email;
 
     usersTemplate.querySelector(".users__address").textContent =
-      "address: " + row.address;
+      "address: " + users.address;
 
-    usersTemplate.querySelector(".users__phone").textContent = "phone: " + row.phone;
+    usersTemplate.querySelector(".users__phone").textContent = "phone: " + users.phone;
 
-    usersTemplate.querySelector(".users__website").textContent = row.website;
+    usersTemplate.querySelector(".users__website").textContent = users.website;
 
     usersTemplate.querySelector(".users__company").textContent =
-      "company: " + row.company;
+      "company: " + users.company;
 
     usersFragment.appendChild(usersTemplate);
   });
@@ -49,26 +47,27 @@ function renderUsers(arr, element) {
 
 // ================async users function================
 
-async function fetchUsers(endPoint, id) {
-  try {
-    endPoint = "users";
-    elUsersList.innerHTML = null;
+async function fetchUsers(endPoint = "users", id) {
+  // endPoint = "users";
+  elUsersList.innerHTML = null;
 
-    const response = await fetch("https://jsonplaceholder.typicode.com/" + endPoint);
+  const response = await fetch("https://jsonplaceholder.typicode.com/" + endPoint);
 
-    const data = await response.json();
+  const data = await response.json();
 
-    if (endPoint == "posts") {
-      filteredPosts(userID, data);
-    } else {
-      renderUsers(data, elUsersList);
-    }
-  } catch (err) {
-    console.log("error" + err);
-  }
+  renderUsers(data, elUsersList);
 }
 fetchUsers();
 
+async function fetchPosts(endPoint = "posts", id) {
+  const response = await fetch("https://jsonplaceholder.typicode.com/" + endPoint);
+
+  const data = await response.json();
+
+  renderPosts(data, elPostsList);
+}
+
+// fetchPosts();
 // ===========================
 // ===========================
 // ===========================
@@ -80,15 +79,15 @@ fetchUsers();
 function renderPosts(arr, element) {
   const postsFragment = document.createDocumentFragment();
 
-  arr.forEach(row => {
+  arr.forEach(posts => {
     element.innerHTML = null;
     const postsTemplate = elPostsTemplate.cloneNode(true);
 
-    postsTemplate.querySelector(".posts__item").dataset.post_id = row.id;
-    postsTemplate.querySelector(".posts__item__usersId").textContent = row.userId;
-    postsTemplate.querySelector(".posts__item__id").textContent = row.id;
-    postsTemplate.querySelector(".posts__item__title").textContent = row.title;
-    postsTemplate.querySelector(".posts__item__body").textContent = row.body;
+    postsTemplate.querySelector(".posts__item").dataset.post_id = posts.id;
+    postsTemplate.querySelector(".posts__item__usersId").textContent = posts.userId;
+    postsTemplate.querySelector(".posts__item__id").textContent = posts.id;
+    postsTemplate.querySelector(".posts__item__title").textContent = posts.title;
+    postsTemplate.querySelector(".posts__item__body").textContent = posts.body;
 
     postsFragment.appendChild(postsTemplate);
   });
@@ -103,12 +102,16 @@ function renderPosts(arr, element) {
 // ===========================
 
 // }=============================filter-posts=============
-function filterPosts(userID, data) {
-  const userPosts = data.filter(post => {
-    return post.userId == userID;
+function filterPosts(userId, data) {
+  const posts = data.filter(post => {
+    return post.user_id == userId;
   });
-  renderPosts(userPosts, elPostsList);
+  renderPosts(posts, elPostsList);
 }
+
+// filterPosts()
+
+// filterPosts(userId, elPostsList);
 
 // ===========================
 // ===========================
@@ -123,7 +126,8 @@ elUsersList.addEventListener("click", evt => {
 
   console.log(clickedUsers);
   elCommentsList.innerHTML = null;
-  fetchUsers("posts", clickedUsers);
+  // filterPosts(clickedUsers);
+  fetchPosts("posts", elPostsList);
 });
 
 // ================render comments ============
@@ -133,14 +137,15 @@ function renderComments(arr, element) {
 
   const commentFragment = document.createDocumentFragment();
 
-  arr.forEach(row => {
+  arr.forEach(comments => {
     const commentTemplate = elCommentsTemplate.cloneNode(true);
 
-    commentTemplate.querySelector(".comments__item__postId").textContent = row.postId;
-    commentTemplate.querySelector(".comments__item__id").textContent = row.id;
-    commentTemplate.querySelector(".comments__item__name").textContent = row.name;
-    commentTemplate.querySelector(".comments__item__email").textContent = row.email;
-    commentTemplate.querySelector(".comments__item__body").textContent = row.body;
+    commentTemplate.querySelector(".comments__item__postId").textContent =
+      comments.postId;
+    commentTemplate.querySelector(".comments__item__id").textContent = comments.id;
+    commentTemplate.querySelector(".comments__item__name").textContent = comments.name;
+    commentTemplate.querySelector(".comments__item__email").textContent = comments.email;
+    commentTemplate.querySelector(".comments__item__body").textContent = comments.body;
 
     commentFragment.appendChild(commentTemplate);
   });
