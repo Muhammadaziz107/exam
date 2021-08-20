@@ -15,11 +15,11 @@
       </div>
       <!-- ======posts====== -->
 
-      <div class="posts">
+      <div class="posts p-5 m-5">
         <ul class="posts__list"></ul>
       </div>
       <!-- ======comments====== -->
-      <div class="comments">
+      <div class="comments p-5 m-5">
         <ul class="comments__list"></ul>
       </div>
     </section>
@@ -28,7 +28,7 @@
 
     <template class="users-template">
       <li class="users__item my-4">
-        <p class="users__id">1</p>
+        <p class="users__id" data-user_id="0">1</p>
         <p class="users__name">Leanne Graham</p>
         <p class="users__username">Bret</p>
         <p class="users__email">Sincere@april.biz</p>
@@ -53,11 +53,26 @@
 
     <!-- =====posts-template========== -->
 
-    <template class="posts-template"></template>
+    <template class="posts-template">
+      <li class="posts__item my-4" data-post_id="0">
+        <p class="posts__item__usersId">1</p>
+        <p class="posts__item__id">1</p>
+        <p class="posts__item__title">
+          sunt aut facere repellat provident occaecati excepturi optio reprehenderit
+        </p>
+        <p class="posts__item__body">
+          quia et suscipit\nsuscipit recusandae consequuntur expedita et
+          cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem
+          eveniet architecto
+        </p>
+      </li>
+    </template>
 
     <!-- =====comments-template========== -->
 
-    <template class="comments-template"></template>
+    <template class="comments-template">
+      <li class="comments__item"></li>
+    </template>
     <script src="./js/main.js"></script>
   </body>
 </html>

@@ -1,7 +1,9 @@
 body {
   background-color: #70aac6;
   width: 100%;
-  height: 100%;
+}
+.section {
+  display: flex;
 }
 
 .users {
@@ -15,6 +17,35 @@ body {
   list-style-type: none;
 }
 .users__item {
+  background-color: #d5e5c8;
+  text-align: center;
+  padding: 15px 20px;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+.posts__list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.posts {
+  width: 400px;
+  background-color: #d95ba1;
+  border-radius: 5px;
+}
+.posts__item {
+  background-color: #d5e5c8;
+  text-align: center;
+  padding: 15px 20px;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+.comments__list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.comments__item {
   background-color: #d5e5c8;
   text-align: center;
   padding: 15px 20px;
