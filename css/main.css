@@ -71,3 +71,15 @@ body {
 .comments__item:hover {
   box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
 }
+.users__address {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  margin-bottom: 20px;
+}
+.users__company {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  margin-top: 20px;
+}

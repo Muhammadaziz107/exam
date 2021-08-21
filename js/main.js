@@ -24,15 +24,33 @@ function renderUsers(arr, element) {
 
     usersTemplate.querySelector(".users__email").textContent = "email: " + users.email;
 
-    usersTemplate.querySelector(".users__address").textContent =
-      "address: " + users.address;
+    const usersAddress = elUsersTemplate.querySelector(".users__address");
+    // ============
 
+    usersTemplate.querySelector(".users__address__street").textContent =
+      "street: " + users.address.street;
+    usersTemplate.querySelector(".users__address__suite").textContent =
+      "suite: " + users.address.suite;
+    usersTemplate.querySelector(".users__address__city").textContent =
+      "city: " + users.address.city;
+    usersTemplate.querySelector(".users__address__zipcode").textContent =
+      "zipcode: " + users.address.zipcode;
+
+    usersTemplate.querySelector(".users__address__geo").href =
+      "https://www.google.com/maps/place/-37.3159,81.1496";
+    // ==========
     usersTemplate.querySelector(".users__phone").textContent = "phone: " + users.phone;
 
     usersTemplate.querySelector(".users__website").textContent = users.website;
 
-    usersTemplate.querySelector(".users__company").textContent =
-      "company: " + users.company;
+    const usersCompany = usersTemplate.querySelector(".users__company");
+
+    usersTemplate.querySelector(".users__company__name").textContent =
+      "name:" + users.company.name;
+    usersTemplate.querySelector(".users__company__catchPhrase").textContent =
+      "catchPhrase:" + users.company.catchPhrase;
+    usersTemplate.querySelector(".users__company__bs").textContent =
+      "bs:" + users.company.bs;
 
     usersFragment.appendChild(usersTemplate);
   });
