@@ -71,14 +71,6 @@ async function fetchUsers(endPoint = "users", id) {
 }
 fetchUsers();
 
-async function fetchPosts(endPoint = "posts", id) {
-  const response = await fetch("https://jsonplaceholder.typicode.com/" + endPoint);
-
-  const data = await response.json();
-
-  renderPosts(data, elPostsList);
-}
-
 // ==================render posts==============
 function renderPosts(arr, element) {
   const postsFragment = document.createDocumentFragment();
@@ -98,6 +90,14 @@ function renderPosts(arr, element) {
   element.appendChild(postsFragment);
 }
 
+async function fetchPosts(endPoint = "posts", id) {
+  const response = await fetch("https://jsonplaceholder.typicode.com/" + endPoint);
+
+  const data = await response.json();
+
+  renderPosts(data, elPostsList);
+}
+
 // ===============add eveny user list====================
 elUsersList.addEventListener("click", evt => {
   const clickedUsers = evt.target.closest("li").dataset.user_id;
@@ -107,6 +107,17 @@ elUsersList.addEventListener("click", evt => {
 
   fetchPosts("posts", elPostsList);
 });
+
+// fetchComments();
+async function fetchComments(id) {
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/comments?postId=" + id
+  );
+
+  const data = await response.json();
+
+  renderComments(data, elCommentsList);
+}
 
 // ================render comments ============
 
@@ -128,16 +139,6 @@ function renderComments(arr, element) {
     commentFragment.appendChild(commentTemplate);
   });
   element.appendChild(commentFragment);
-}
-// fetchComments();
-async function fetchComments(id) {
-  const response = await fetch(
-    "https://jsonplaceholder.typicode.com/comments?postId=" + id
-  );
-
-  const data = await response.json();
-
-  renderComments(data, elCommentsList);
 }
 
 elPostsList.addEventListener("click", evt => {
